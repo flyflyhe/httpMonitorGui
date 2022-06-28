@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"fyne.io/fyne/v2"
 	"github.com/flyflyhe/httpMonitorGui/component"
+	"github.com/flyflyhe/httpMonitorGui/services/rpc"
 	"github.com/flyflyhe/httpMonitorGui/themes"
 	"log"
 	"net/url"
@@ -15,19 +16,17 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func init() {
-
-}
-
 const preferenceCurrentTutorial = "currentTutorial"
 
 var topWindow fyne.Window
 
 func main() {
+	go rpc.Start() //启动服务
+
 	a := app.NewWithID("httpMonitorGui")
 	a.SetIcon(theme.FyneLogo())
 	logLifecycle(a)
-	w := a.NewWindow("apple Service")
+	w := a.NewWindow("url监控")
 	topWindow = w
 
 	a.Settings().SetTheme(&themes.CTheme{})
@@ -59,7 +58,8 @@ func main() {
 	}
 
 	tutorial := container.NewBorder(
-		container.NewVBox(title, widget.NewSeparator(), intro), nil, nil, nil, content)
+		container.NewVBox(title, widget.NewSeparator(), intro),
+		nil, nil, nil, content)
 	if fyne.CurrentDevice().IsMobile() {
 		w.SetContent(makeNav(setComponent, false))
 	} else {

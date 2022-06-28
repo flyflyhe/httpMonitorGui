@@ -16,10 +16,11 @@ var (
 			"See the canvas capabilities.",
 			canvasScreen,
 		},
+		"url": {Title: "url管理", View: urlScreen},
 	}
 
 	//index tree
 	AppViewsIndex = map[string][]string{
-		"": {"welcome", "canvas"},
+		"": {"welcome", "canvas", "url"},
 	}
 )

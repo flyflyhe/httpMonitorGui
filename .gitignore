@@ -2,3 +2,4 @@
 .bundled.go
 .exe
 .idea
+*.db
