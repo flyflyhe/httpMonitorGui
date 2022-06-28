@@ -3,8 +3,11 @@ package component
 import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
+	"github.com/flyflyhe/httpMonitorGui/services/rpc"
 	"log"
+	"strconv"
 )
 
 func buttonFocusLost(buttons ...*widget.Button) {
@@ -13,7 +16,7 @@ func buttonFocusLost(buttons ...*widget.Button) {
 	}
 }
 
-func urlScreen(_ fyne.Window) fyne.CanvasObject {
+func urlScreen(w fyne.Window) fyne.CanvasObject {
 	vBox := container.NewVBox()
 
 	var addButton *widget.Button
@@ -38,6 +41,17 @@ func urlScreen(_ fyne.Window) fyne.CanvasObject {
 			CancelText: "重置",
 			OnSubmit: func() { // optional, handle form submission
 				log.Println("Form submitted:", urlEntry.Text, intervalEntry.Text)
+				interval, err := strconv.Atoi(intervalEntry.Text)
+				if err != nil {
+					dialog.ShowError(err, w)
+					return
+				}
+				if err = rpc.SetUrl(urlEntry.Text, int32(interval)); err != nil {
+					dialog.ShowError(err, w)
+				} else {
+					dialog.ShowInformation("提示", "保存成功", w)
+				}
+
 			},
 			SubmitText: "保存",
 		}

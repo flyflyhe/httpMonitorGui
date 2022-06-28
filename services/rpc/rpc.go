@@ -1,10 +1,12 @@
 package rpc
 
 import (
+	"context"
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
 	"github.com/flyflyhe/httpMonitor/config"
+	httpMonitorRpc "github.com/flyflyhe/httpMonitor/rpc"
 	"github.com/flyflyhe/httpMonitor/services"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
@@ -19,8 +21,15 @@ func Start() {
 	services.Start(address)
 }
 
-func SetUrl(url string, interval int) {
+func SetUrl(url string, interval int32) error {
+	conn, err := GetRpcConn()
+	if err != nil {
+		return err
+	}
+	rpcClient := httpMonitorRpc.NewUrlServiceClient(conn)
 
+	_, err = rpcClient.SetUrl(context.Background(), &httpMonitorRpc.UrlRequest{Url: url, Interval: interval})
+	return err
 }
 
 func GetRpcConn() (*grpc.ClientConn, error) {
