@@ -1,6 +1,7 @@
 package layouts
 
 import (
+	"log"
 	"sync"
 
 	"fyne.io/fyne/v2"
@@ -119,19 +120,24 @@ func (g *boxLayout) Layout(objects []fyne.CanvasObject, size fyne.Size) {
 		extraCell = extra / float32(len(spacers))
 	}
 
-	for _, child := range objects {
+	for index, child := range objects {
 		if !child.Visible() {
 			continue
 		}
 
 		var width, height float32
+
+		width = child.MinSize().Width
+		height = child.MinSize().Height
+
+		var eWidth, eHeight float32
 		config := GetObjConfig(child)
 		if config != nil {
-			width = child.MinSize().Width + float32(config.Width)
-			height = child.MinSize().Height + float32(config.Height)
+			eWidth = float32(config.Width)
+			eHeight = float32(config.Height)
 		} else {
-			width = child.MinSize().Width
-			height = child.MinSize().Height
+			eWidth = width
+			eHeight = height
 		}
 
 		if g.isSpacer(child) {
@@ -146,10 +152,22 @@ func (g *boxLayout) Layout(objects []fyne.CanvasObject, size fyne.Size) {
 
 		if g.horizontal {
 			x += theme.Padding() + width
-			child.Resize(fyne.NewSize(width, size.Height))
+			if index == len(objects)-1 {
+				child.Resize(fyne.NewSize(eWidth, size.Height))
+			} else {
+				child.Resize(fyne.NewSize(width, size.Height))
+			}
 		} else {
 			y += theme.Padding() + height
-			child.Resize(fyne.NewSize(size.Width, height))
+			//// 如果是最后一个控件，则占满剩余控件
+			if index == len(objects)-1 {
+
+				//child.Resize(fyne.NewSize(size.Width, size.Height-y+height))
+				log.Println("size.Height", size.Height, "y", y, "height", height)
+				child.Resize(fyne.NewSize(size.Width, eHeight))
+			} else {
+				child.Resize(fyne.NewSize(size.Width, height))
+			}
 		}
 	}
 }

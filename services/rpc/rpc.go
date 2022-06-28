@@ -8,6 +8,7 @@ import (
 	"github.com/flyflyhe/httpMonitor/config"
 	httpMonitorRpc "github.com/flyflyhe/httpMonitor/rpc"
 	"github.com/flyflyhe/httpMonitor/services"
+	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -21,14 +22,42 @@ func Start() {
 	services.Start(address)
 }
 
+func ListUrl() ([]string, error) {
+	conn, err := GetRpcConn()
+	defer conn.Close()
+	if err != nil {
+		return nil, err
+	}
+	rpcClient := httpMonitorRpc.NewUrlServiceClient(conn)
+
+	if res, err := rpcClient.GetAll(context.Background(), &empty.Empty{}); err != nil {
+		return nil, err
+	} else {
+		return res.Urls, nil
+	}
+}
+
 func SetUrl(url string, interval int32) error {
 	conn, err := GetRpcConn()
+	defer conn.Close()
 	if err != nil {
 		return err
 	}
 	rpcClient := httpMonitorRpc.NewUrlServiceClient(conn)
 
 	_, err = rpcClient.SetUrl(context.Background(), &httpMonitorRpc.UrlRequest{Url: url, Interval: interval})
+	return err
+}
+
+func DeleteUrl(url string) error {
+	conn, err := GetRpcConn()
+	defer conn.Close()
+	if err != nil {
+		return err
+	}
+	rpcClient := httpMonitorRpc.NewUrlServiceClient(conn)
+
+	_, err = rpcClient.DeleteUrl(context.Background(), &httpMonitorRpc.UrlRequest{Url: url})
 	return err
 }
 
