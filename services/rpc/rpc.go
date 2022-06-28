@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/tls"
 	"crypto/x509"
+	"errors"
 	"fmt"
 	"github.com/flyflyhe/httpMonitor/config"
 	httpMonitorRpc "github.com/flyflyhe/httpMonitor/rpc"
@@ -12,9 +13,20 @@ import (
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"sync"
 )
 
 var I = 0
+
+var grpcConnPool = sync.Pool{
+	New: func() any {
+		conn, err := GetRpcConn()
+		if err != nil {
+			log.Debug().Caller().Str("pool create grpc conn failed", err.Error())
+		}
+		return conn
+	},
+}
 
 const address = "localhost:50051"
 
@@ -23,11 +35,14 @@ func Start() {
 }
 
 func ListUrl() ([]string, error) {
-	conn, err := GetRpcConn()
-	defer conn.Close()
-	if err != nil {
-		return nil, err
+	poolConn := grpcConnPool.Get()
+	conn, ok := poolConn.(*grpc.ClientConn)
+	defer grpcConnPool.Put(poolConn)
+
+	if !ok {
+		return nil, errors.New("from pool get conn failed")
 	}
+
 	rpcClient := httpMonitorRpc.NewUrlServiceClient(conn)
 
 	if res, err := rpcClient.GetAll(context.Background(), &empty.Empty{}); err != nil {
@@ -38,26 +53,30 @@ func ListUrl() ([]string, error) {
 }
 
 func SetUrl(url string, interval int32) error {
-	conn, err := GetRpcConn()
-	defer conn.Close()
-	if err != nil {
-		return err
+	poolConn := grpcConnPool.Get()
+	conn, ok := poolConn.(*grpc.ClientConn)
+	defer grpcConnPool.Put(poolConn)
+	if !ok {
+		return errors.New("from pool get conn failed")
 	}
+
 	rpcClient := httpMonitorRpc.NewUrlServiceClient(conn)
 
-	_, err = rpcClient.SetUrl(context.Background(), &httpMonitorRpc.UrlRequest{Url: url, Interval: interval})
+	_, err := rpcClient.SetUrl(context.Background(), &httpMonitorRpc.UrlRequest{Url: url, Interval: interval})
 	return err
 }
 
 func DeleteUrl(url string) error {
-	conn, err := GetRpcConn()
-	defer conn.Close()
-	if err != nil {
-		return err
+	poolConn := grpcConnPool.Get()
+	conn, ok := poolConn.(*grpc.ClientConn)
+	defer grpcConnPool.Put(poolConn)
+	if !ok {
+		return errors.New("from pool get conn failed")
 	}
+
 	rpcClient := httpMonitorRpc.NewUrlServiceClient(conn)
 
-	_, err = rpcClient.DeleteUrl(context.Background(), &httpMonitorRpc.UrlRequest{Url: url})
+	_, err := rpcClient.DeleteUrl(context.Background(), &httpMonitorRpc.UrlRequest{Url: url})
 	return err
 }
 
