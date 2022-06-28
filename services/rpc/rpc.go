@@ -23,6 +23,7 @@ var grpcConnPool = sync.Pool{
 		conn, err := GetRpcConn()
 		if err != nil {
 			log.Debug().Caller().Str("pool create grpc conn failed", err.Error())
+			return nil
 		}
 		return conn
 	},
