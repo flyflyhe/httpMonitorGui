@@ -183,14 +183,18 @@ func StartMonitor(monitorQueue *MonitorQueue) error {
 				//Recv() 方法接收服务端消息，默认每次Recv()最大消息长度为`1024*1024*4`bytes(4M)
 				res, err := stream.Recv()
 
-				monitorQueue.Queue <- res
 				// 判断消息流是否已经结束
 				if err == io.EOF {
+					log.Debug().Caller().Msg(err.Error())
 					break
 				}
+
 				if err != nil {
+					log.Error().Caller().Msg(err.Error())
 					break
 				}
+
+				monitorQueue.Queue <- res
 			}
 		}()
 
