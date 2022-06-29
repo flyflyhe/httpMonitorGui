@@ -7,6 +7,7 @@ import (
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
 	"github.com/flyflyhe/httpMonitorGui/layouts"
+	"github.com/flyflyhe/httpMonitorGui/services/global"
 	"github.com/flyflyhe/httpMonitorGui/services/rpc"
 	"github.com/rs/zerolog/log"
 	"runtime/debug"
@@ -39,7 +40,7 @@ func monitorScreen(w fyne.Window) fyne.CanvasObject {
 						for proxy, v := range res.Result {
 							entry.Text += "\n" + proxy + "<=>" + v
 							if v != "success" {
-								fyne.NewNotification(res.Url+"监控异常", "代理"+proxy+"信息+"+v)
+								global.TopFyneApp.SendNotification(fyne.NewNotification(res.Url+"监控异常", "代理"+proxy+"信息+"+v))
 							}
 						}
 

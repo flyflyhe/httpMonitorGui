@@ -1,5 +1,5 @@
 ```
 生成bundled.go
 
-fyne bundle -append simkai.ttf >> bundled.go
+fyne bundle --pkg=config  simkai.ttf >> bundled.go
 ```

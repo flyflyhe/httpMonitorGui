@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"fyne.io/fyne/v2"
 	"github.com/flyflyhe/httpMonitorGui/component"
+	"github.com/flyflyhe/httpMonitorGui/services/global"
 	"github.com/flyflyhe/httpMonitorGui/services/rpc"
 	"github.com/flyflyhe/httpMonitorGui/themes"
 	"log"
@@ -24,6 +25,7 @@ func main() {
 	go rpc.Start() //启动服务
 
 	a := app.NewWithID("io.apple.httpMonitorGui")
+	global.TopFyneApp = a
 	a.SetIcon(theme.FyneLogo())
 	logLifecycle(a)
 	w := a.NewWindow("url监控")
