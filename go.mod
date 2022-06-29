@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	fyne.io/fyne/v2 v2.2.1
-	github.com/flyflyhe/httpMonitor v0.0.0-20220629073528-1924b6435607
+	github.com/flyflyhe/httpMonitor v0.0.0-20220629085225-ff43d3d88617
 )
 
 require (

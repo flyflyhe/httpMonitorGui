@@ -68,6 +68,24 @@ func ListUrl() ([]string, error) {
 	}
 }
 
+func ListUrlInterval() (map[string]int32, error) {
+	poolConn := grpcConnPool.Get()
+	conn, ok := poolConn.(*grpc.ClientConn)
+	defer grpcConnPool.Put(poolConn)
+
+	if !ok {
+		return nil, errors.New("from pool get conn failed")
+	}
+
+	rpcClient := httpMonitorRpc.NewUrlServiceClient(conn)
+
+	if res, err := rpcClient.GetAllDomainAndInterval(context.Background(), &empty.Empty{}); err != nil {
+		return nil, err
+	} else {
+		return res.UrlInterval, nil
+	}
+}
+
 func SetUrl(url string, interval int32) error {
 	poolConn := grpcConnPool.Get()
 	conn, ok := poolConn.(*grpc.ClientConn)

@@ -8,7 +8,6 @@ import (
 	"fyne.io/fyne/v2/widget"
 	"github.com/flyflyhe/httpMonitorGui/layouts"
 	"github.com/flyflyhe/httpMonitorGui/services/rpc"
-	"github.com/flyflyhe/httpMonitorGui/services/stringHelper"
 	"github.com/rs/zerolog/log"
 	"runtime/debug"
 	"sync"
@@ -35,9 +34,14 @@ func monitorScreen(w fyne.Window) fyne.CanvasObject {
 			for {
 				select {
 				case res := <-rpc.GetMonitorQueue().Queue:
-					result := stringHelper.SplitStringByLength(res.Result, "\n", 50)
+					entry.Text = entry.Text + "\n" + res.Url
+					for proxy, v := range res.Result {
+						entry.Text += "\n" + proxy + "<=>" + v
+						if v != "success" {
+							fyne.NewNotification(res.Url+"监控异常", "代理"+proxy+"信息+"+v)
+						}
+					}
 
-					entry.Text = entry.Text + "\n" + res.Url + "\n" + result
 					vBox.Objects = []fyne.CanvasObject{entry}
 					vBox.Refresh()
 				default:

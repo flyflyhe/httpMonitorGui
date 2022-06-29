@@ -93,6 +93,10 @@ github.com/flyflyhe/httpMonitor v0.0.0-20220629035250-2a0921d29539 h1:B+4Dtc6MNQ
 github.com/flyflyhe/httpMonitor v0.0.0-20220629035250-2a0921d29539/go.mod h1:hg2tOt79LqQCIMVhcgH8+6ALVPbYBVaX0GFpoznfR9c=
 github.com/flyflyhe/httpMonitor v0.0.0-20220629073528-1924b6435607 h1:ujOI3foLxSa5oK1afui3fUZosEmTa7CSpMQqEkSCzJI=
 github.com/flyflyhe/httpMonitor v0.0.0-20220629073528-1924b6435607/go.mod h1:hg2tOt79LqQCIMVhcgH8+6ALVPbYBVaX0GFpoznfR9c=
+github.com/flyflyhe/httpMonitor v0.0.0-20220629081553-245c1e65f333 h1:XAVYg4nYLfLkaXA/4vFcI0FzHnmVqB0rDMzXqrn6gBg=
+github.com/flyflyhe/httpMonitor v0.0.0-20220629081553-245c1e65f333/go.mod h1:aH+FerhOCfnV633PmS9w5R1cF2ixBQgRgPEUXDOlTfg=
+github.com/flyflyhe/httpMonitor v0.0.0-20220629085225-ff43d3d88617 h1:mik7DKaCcsM7ifD7DxcU2vuTzEr6dUTro7isWBPWYhM=
+github.com/flyflyhe/httpMonitor v0.0.0-20220629085225-ff43d3d88617/go.mod h1:aH+FerhOCfnV633PmS9w5R1cF2ixBQgRgPEUXDOlTfg=
 github.com/fredbi/uri v0.0.0-20181227131451-3dcfdacbaaf3 h1:FDqhDm7pcsLhhWl1QtD8vlzI4mm59llRvNzrFg6/LAA=
 github.com/fredbi/uri v0.0.0-20181227131451-3dcfdacbaaf3/go.mod h1:CzM2G82Q9BDUvMTGHnXf/6OExw/Dz2ivDj48nVg7Lg8=
 github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4IgpuI1SZQ=

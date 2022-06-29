@@ -17,6 +17,11 @@ func buttonFocusLost(buttons ...*widget.Button) {
 	}
 }
 
+type urlIntervalStruct struct {
+	Url      string
+	Interval int32
+}
+
 func urlScreen(w fyne.Window) fyne.CanvasObject {
 	vBox := container.New(layouts.NewVBoxLayout())
 
@@ -94,9 +99,16 @@ func urlScreen(w fyne.Window) fyne.CanvasObject {
 	showButtonFunc = func() {
 		buttonFocusLost(addButton, deleteButton, showButton)
 		showButton.FocusGained()
-		if urls, err := rpc.ListUrl(); err != nil {
+		if urlIntervalMap, err := rpc.ListUrlInterval(); err != nil {
 			dialog.ShowError(err, w)
 		} else {
+			urls := make([]*urlIntervalStruct, len(urlIntervalMap))
+
+			i := 0
+			for url, interval := range urlIntervalMap {
+				urls[i] = &urlIntervalStruct{Url: url, Interval: interval}
+				i++
+			}
 			list := widget.NewList(
 				func() int {
 					return len(urls)
@@ -105,12 +117,13 @@ func urlScreen(w fyne.Window) fyne.CanvasObject {
 					return widget.NewLabel("template")
 				},
 				func(i widget.ListItemID, o fyne.CanvasObject) {
-					o.(*widget.Label).SetText(urls[i])
+					intervalStr := strconv.FormatInt(int64(urls[i].Interval), 10)
+					o.(*widget.Label).SetText(urls[i].Url + "--" + intervalStr + "ms")
 				})
 			list.OnSelected = func(id widget.ListItemID) {
 				dialog.ShowConfirm("操作", "是否删除", func(b bool) {
 					if b {
-						if err := rpc.DeleteUrl(urls[id]); err != nil {
+						if err := rpc.DeleteUrl(urls[id].Url); err != nil {
 							dialog.ShowError(err, w)
 						} else {
 							dialog.ShowInformation("提示", "删除成功", w)
