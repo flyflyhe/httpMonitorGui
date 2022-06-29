@@ -24,6 +24,6 @@ var (
 	//index tree
 
 	AppViewsIndex = map[string][]string{
-		"": {"welcome", "canvas", "url", "proxy", "monitor"},
+		"": {"welcome", "url", "proxy", "monitor"},
 	}
 )
