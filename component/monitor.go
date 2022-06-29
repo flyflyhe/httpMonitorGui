@@ -34,16 +34,19 @@ func monitorScreen(w fyne.Window) fyne.CanvasObject {
 			for {
 				select {
 				case res := <-rpc.GetMonitorQueue().Queue:
-					entry.Text = entry.Text + "\n" + res.Url
-					for proxy, v := range res.Result {
-						entry.Text += "\n" + proxy + "<=>" + v
-						if v != "success" {
-							fyne.NewNotification(res.Url+"监控异常", "代理"+proxy+"信息+"+v)
+					if res != nil {
+						entry.Text = entry.Text + "\n" + res.Url
+						for proxy, v := range res.Result {
+							entry.Text += "\n" + proxy + "<=>" + v
+							if v != "success" {
+								fyne.NewNotification(res.Url+"监控异常", "代理"+proxy+"信息+"+v)
+							}
 						}
+
+						vBox.Objects = []fyne.CanvasObject{entry}
+						vBox.Refresh()
 					}
 
-					vBox.Objects = []fyne.CanvasObject{entry}
-					vBox.Refresh()
 				default:
 				}
 			}

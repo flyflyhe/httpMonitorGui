@@ -23,7 +23,7 @@ var topWindow fyne.Window
 func main() {
 	go rpc.Start() //启动服务
 
-	a := app.NewWithID("httpMonitorGui")
+	a := app.NewWithID("io.apple.httpMonitorGui")
 	a.SetIcon(theme.FyneLogo())
 	logLifecycle(a)
 	w := a.NewWindow("url监控")
