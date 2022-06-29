@@ -6,6 +6,6 @@ proto:
 .PHONY: clean
 clean:
 	rm -rf ./proto/*.pb.go
-.PHONY: bundle #打包证书
+.PHONY: bundle #打包字体 证书
 bundle:
 	fyne bundle --package=config config/*.ttf > config/bundled.go

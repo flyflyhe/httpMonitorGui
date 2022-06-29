@@ -81,6 +81,51 @@ func DeleteUrl(url string) error {
 	return err
 }
 
+func ListProxy() ([]string, error) {
+	poolConn := grpcConnPool.Get()
+	conn, ok := poolConn.(*grpc.ClientConn)
+	defer grpcConnPool.Put(poolConn)
+	if !ok {
+		return nil, errors.New("from pool get conn failed")
+	}
+
+	rpcClient := httpMonitorRpc.NewUrlServiceClient(conn)
+
+	if res, err := rpcClient.GetAllProxy(context.Background(), &empty.Empty{}); err != nil {
+		return nil, err
+	} else {
+		return res.ProxyList, err
+	}
+}
+
+func SetProxy(proxy string) error {
+	poolConn := grpcConnPool.Get()
+	conn, ok := poolConn.(*grpc.ClientConn)
+	defer grpcConnPool.Put(poolConn)
+	if !ok {
+		return errors.New("from pool get conn failed")
+	}
+
+	rpcClient := httpMonitorRpc.NewUrlServiceClient(conn)
+
+	_, err := rpcClient.SetProxy(context.Background(), &httpMonitorRpc.ProxyRequest{Proxy: proxy})
+	return err
+}
+
+func DeleteProxy(proxy string) error {
+	poolConn := grpcConnPool.Get()
+	conn, ok := poolConn.(*grpc.ClientConn)
+	defer grpcConnPool.Put(poolConn)
+	if !ok {
+		return errors.New("from pool get conn failed")
+	}
+
+	rpcClient := httpMonitorRpc.NewUrlServiceClient(conn)
+
+	_, err := rpcClient.DeleteProxy(context.Background(), &httpMonitorRpc.ProxyRequest{Proxy: proxy})
+	return err
+}
+
 func GetRpcConn() (*grpc.ClientConn, error) {
 	tlsCredentials, err := loadClientTLSCredentials()
 	if err != nil {
