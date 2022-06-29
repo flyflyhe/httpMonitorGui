@@ -1,8 +1,6 @@
 package component
 
 import (
-	"github.com/flyflyhe/httpMonitorGui/services/rpc"
-	"log"
 	"net/url"
 
 	"fyne.io/fyne/v2"
@@ -29,9 +27,6 @@ func welcomeScreen(_ fyne.Window) fyne.CanvasObject {
 	} else {
 		logo.SetMinSize(fyne.NewSize(228, 167))
 	}
-
-	rpc.I++
-	log.Println("i", rpc.I)
 
 	return container.NewCenter(container.NewVBox(
 		widget.NewLabelWithStyle("Welcome to the Fyne toolkit demo app", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),

@@ -13,10 +13,25 @@ import (
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"io"
 	"sync"
 )
 
-var I = 0
+var monitorQueue *MonitorQueue
+var once sync.Once
+
+type MonitorQueue struct {
+	Queue   chan *httpMonitorRpc.MonitorResponse
+	Running bool
+	m       sync.Mutex
+}
+
+func GetMonitorQueue() *MonitorQueue {
+	once.Do(func() {
+		monitorQueue = &MonitorQueue{Queue: make(chan *httpMonitorRpc.MonitorResponse, 100)}
+	})
+	return monitorQueue
+}
 
 var grpcConnPool = sync.Pool{
 	New: func() any {
@@ -143,6 +158,58 @@ func GetRpcConn() (*grpc.ClientConn, error) {
 	}
 
 	return conn, nil
+}
+
+func StartMonitor(monitorQueue *MonitorQueue) error {
+	poolConn := grpcConnPool.Get()
+	conn, ok := poolConn.(*grpc.ClientConn)
+	defer grpcConnPool.Put(poolConn)
+	if !ok {
+		return errors.New("from pool get conn failed")
+	}
+
+	rpcClient := httpMonitorRpc.NewMonitorServerClient(conn)
+	if stream, err := rpcClient.Start(context.Background(), &httpMonitorRpc.MonitorRequest{}); err != nil {
+		return err
+	} else {
+		go func() {
+			monitorQueue.m.Lock()
+			monitorQueue.Running = true
+			defer func() {
+				monitorQueue.m.Unlock()
+				monitorQueue.Running = false
+			}()
+			for {
+				//Recv() 方法接收服务端消息，默认每次Recv()最大消息长度为`1024*1024*4`bytes(4M)
+				res, err := stream.Recv()
+
+				monitorQueue.Queue <- res
+				// 判断消息流是否已经结束
+				if err == io.EOF {
+					break
+				}
+				if err != nil {
+					break
+				}
+			}
+		}()
+
+	}
+
+	return nil
+}
+
+func StopMonitor(monitorQueue *MonitorQueue) error {
+	poolConn := grpcConnPool.Get()
+	conn, ok := poolConn.(*grpc.ClientConn)
+	defer grpcConnPool.Put(poolConn)
+	if !ok {
+		return errors.New("from pool get conn failed")
+	}
+
+	rpcClient := httpMonitorRpc.NewMonitorServerClient(conn)
+	_, err := rpcClient.Stop(context.Background(), &empty.Empty{})
+	return err
 }
 
 func loadClientTLSCredentials() (credentials.TransportCredentials, error) {

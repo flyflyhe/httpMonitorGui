@@ -1,9 +1,7 @@
 package component
 
 import (
-	"github.com/flyflyhe/httpMonitorGui/services/rpc"
 	"image/color"
-	"log"
 	"time"
 
 	"fyne.io/fyne/v2"
@@ -21,8 +19,6 @@ func rgbGradient(x, y, w, h int) color.Color {
 
 // canvasScreen loads a graphics example panel for the demo app
 func canvasScreen(_ fyne.Window) fyne.CanvasObject {
-	rpc.I++
-	log.Println("i", rpc.I)
 
 	gradient := canvas.NewHorizontalGradient(color.NRGBA{0x80, 0, 0, 0xff}, color.NRGBA{0, 0x80, 0, 0xff})
 	go func() {

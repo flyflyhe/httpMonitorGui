@@ -16,13 +16,14 @@ var (
 			"See the canvas capabilities.",
 			canvasScreen,
 		},
-		"url":   {Title: "url管理", View: urlScreen},
-		"proxy": {Title: "proxy管理", View: proxyScreen},
+		"url":     {Title: "地址管理", View: urlScreen},
+		"proxy":   {Title: "代理管理", View: proxyScreen},
+		"monitor": {Title: "监控管理", View: monitorScreen},
 	}
 
 	//index tree
 
 	AppViewsIndex = map[string][]string{
-		"": {"welcome", "canvas", "url", "proxy"},
+		"": {"welcome", "canvas", "url", "proxy", "monitor"},
 	}
 )
