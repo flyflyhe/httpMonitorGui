@@ -91,6 +91,8 @@ github.com/flyflyhe/httpMonitor v0.0.0-20220629031208-30cbcc514dae h1:y7x5henPxA
 github.com/flyflyhe/httpMonitor v0.0.0-20220629031208-30cbcc514dae/go.mod h1:hg2tOt79LqQCIMVhcgH8+6ALVPbYBVaX0GFpoznfR9c=
 github.com/flyflyhe/httpMonitor v0.0.0-20220629035250-2a0921d29539 h1:B+4Dtc6MNQx8bDm2p7aZQkTiuiRQDRRlzVLhWdsgaqw=
 github.com/flyflyhe/httpMonitor v0.0.0-20220629035250-2a0921d29539/go.mod h1:hg2tOt79LqQCIMVhcgH8+6ALVPbYBVaX0GFpoznfR9c=
+github.com/flyflyhe/httpMonitor v0.0.0-20220629073528-1924b6435607 h1:ujOI3foLxSa5oK1afui3fUZosEmTa7CSpMQqEkSCzJI=
+github.com/flyflyhe/httpMonitor v0.0.0-20220629073528-1924b6435607/go.mod h1:hg2tOt79LqQCIMVhcgH8+6ALVPbYBVaX0GFpoznfR9c=
 github.com/fredbi/uri v0.0.0-20181227131451-3dcfdacbaaf3 h1:FDqhDm7pcsLhhWl1QtD8vlzI4mm59llRvNzrFg6/LAA=
 github.com/fredbi/uri v0.0.0-20181227131451-3dcfdacbaaf3/go.mod h1:CzM2G82Q9BDUvMTGHnXf/6OExw/Dz2ivDj48nVg7Lg8=
 github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4IgpuI1SZQ=
