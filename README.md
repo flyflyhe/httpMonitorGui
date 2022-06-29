@@ -10,4 +10,4 @@ fyne package -os darwin -name httpMonitor -icon icon.png
 ```
 
 
-效果
+效果![image](https://github.com/flyflyhe/httpMonitorGui/blob/master/img.png)
