@@ -2,4 +2,4 @@
   Icon = "../../theme/icons/fyne.png"
   Name = "httpMonitor"
   ID = "io.fyne.httpMonitor"
-  Build = 22
+  Build = 23

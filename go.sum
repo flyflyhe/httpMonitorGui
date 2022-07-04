@@ -97,6 +97,8 @@ github.com/flyflyhe/httpMonitor v0.0.0-20220629081553-245c1e65f333 h1:XAVYg4nYLf
 github.com/flyflyhe/httpMonitor v0.0.0-20220629081553-245c1e65f333/go.mod h1:aH+FerhOCfnV633PmS9w5R1cF2ixBQgRgPEUXDOlTfg=
 github.com/flyflyhe/httpMonitor v0.0.0-20220629085225-ff43d3d88617 h1:mik7DKaCcsM7ifD7DxcU2vuTzEr6dUTro7isWBPWYhM=
 github.com/flyflyhe/httpMonitor v0.0.0-20220629085225-ff43d3d88617/go.mod h1:aH+FerhOCfnV633PmS9w5R1cF2ixBQgRgPEUXDOlTfg=
+github.com/flyflyhe/httpMonitor v0.0.0-20220704022712-4f3d7d3bb117 h1:zfVUY6gfxXqcpWYfUQxZB3RdgMDwpWsgGOUUfptAVNY=
+github.com/flyflyhe/httpMonitor v0.0.0-20220704022712-4f3d7d3bb117/go.mod h1:aH+FerhOCfnV633PmS9w5R1cF2ixBQgRgPEUXDOlTfg=
 github.com/fredbi/uri v0.0.0-20181227131451-3dcfdacbaaf3 h1:FDqhDm7pcsLhhWl1QtD8vlzI4mm59llRvNzrFg6/LAA=
 github.com/fredbi/uri v0.0.0-20181227131451-3dcfdacbaaf3/go.mod h1:CzM2G82Q9BDUvMTGHnXf/6OExw/Dz2ivDj48nVg7Lg8=
 github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4IgpuI1SZQ=
@@ -489,6 +491,8 @@ golang.org/x/sys v0.0.0-20210927094055-39ccf1dd6fa6/go.mod h1:oPkhp1MJrh7nUepCBc
 golang.org/x/sys v0.0.0-20220412211240-33da011f77ad/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/sys v0.0.0-20220627191245-f75cf1eec38b h1:2n253B2r0pYSmEV+UNCQoPfU/FiaizQEK5Gu4Bq4JE8=
 golang.org/x/sys v0.0.0-20220627191245-f75cf1eec38b/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
+golang.org/x/sys v0.0.0-20220702020025-31831981b65f h1:xdsejrW/0Wf2diT5CPp3XmKUNbr7Xvw8kYilQ+6qjRY=
+golang.org/x/sys v0.0.0-20220702020025-31831981b65f/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
 golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1/go.mod h1:bj7SfCRtBDWHUb9snDiAeCFNEtKQo2Wmx5Cou7ajbmo=
 golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
